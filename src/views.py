@@ -14,7 +14,7 @@ class Menu(pygame.sprite.Sprite):
     #- Basic Menu Object -#
     # Constructor #
     # Pass the width, height, a number of items,  and color of the object
-    def __init__(self, width, items, active=False):
+    def __init__(self, width, screen_rect, items, active=False):
         # Call the Parent Class(Sprite) Constructor
         pygame.sprite.Sprite.__init__(self)
 
@@ -29,20 +29,24 @@ class Menu(pygame.sprite.Sprite):
         # Fetch a rectangle object that has the dimensions of the image
         # Update the position of the sprite by setting the rect values
         self.rect = self.image.get_rect()
+        self.rect.centerx = screen_rect.centerx
+        self.rect.centery = screen_rect.centery
 
-        # Put the font objects into the list
-        # Put the font object's rect into another list?
+        # Put the font objects into a list and add the rects afterwards
 
         for i in range(len(items)) :
             self.options.append([])
             self.options[i].append(self.font.render(items[i], True, pygame.Color("white")))
             self.options[i].append(self.options[i][0].get_rect())
 
-    def draw(self, screen):
+        self.draw()
+
+    def draw(self):
         for i in range(len(self.items)):
-            screen.blit(self.options[i],(screen.get_rect().centerx - (self.options[i].get_rect().width / 2),screen.get_rect().centery - self.options[i].get_rect().height + (self.options[i].get_rect().height * i)))
-            self.options[i][i].x = screen.get_rect().centerx - (self.options[i].get_rect().width / 2)
-            self.options[i][i].y = screen.get_rect().centery - self.options[i].get_rect().height + (self.options[i].get_rect().height * i)
+            self.options[i][1].x = self.rect.centerx - (self.options[i][1].width / 2)
+            self.options[i][1].y = self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)
+            self.image.blit(self.options[i][0], (self.rect.centerx - (self.options[i][1].width / 2), self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)))
+
 
 
 
