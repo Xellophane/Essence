@@ -42,10 +42,20 @@ class Menu(pygame.sprite.Sprite):
         self.draw()
 
     def draw(self):
+        """
+        -populate the two arrays
+        -blit to the image surface
+        """
+
         for i in range(len(self.items)):
             self.options[i][1].x = self.rect.centerx - (self.options[i][1].width / 2)
             self.options[i][1].y = self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)
-            self.image.blit(self.options[i][0], (self.rect.centerx - (self.options[i][1].width / 2), self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)))
+
+            #- Something Wrong HERE V -#
+            self.image.blit(self.options[i][0], (self.rect.centerx - (self.options[i][1].width / 1), self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)))
+
+            #- For whatever reason, THIS works -#
+            # self.image.blit(self.options[i][0], (0, i * 60))
 
 
 
