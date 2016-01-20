@@ -52,10 +52,11 @@ class Menu(pygame.sprite.Sprite):
             self.options[i][1].y = self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)
 
             #- Something Wrong HERE V -#
-            self.image.blit(self.options[i][0], (self.rect.centerx - (self.options[i][1].width / 1), self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)))
+            # self.image.blit(self.options[i][0], (self.rect.centerx - (self.options[i][1].width / 2), self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)))
+
 
             #- For whatever reason, THIS works -#
-            # self.image.blit(self.options[i][0], (0, i * 60))
+            self.image.blit(self.options[i][0], (0, i * 60))
 
 
 
