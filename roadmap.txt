@@ -1,0 +1,16 @@
+Flesh out scenes list
+    - Main Model
+    - Sprites should NOT go here
+        - Should go with their view?
+        - Some sprites will end up with some controller combination
+    - Weak refs to allow easy adding and removal
+    - Scene parent
+        - Used as the basic scene
+Figure out controllers list
+    - Player input
+How will you process events?
+    - Events will be handeled in models.
+
+Menu handling
+    - Art style?
+

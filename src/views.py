@@ -6,6 +6,21 @@ Menu.py
 
 import pygame
 
+class Window(pygame.sprite.Sprite):
+    """
+    Basic Window Class
+    Super class for every window here in
+    #0003#
+    """
+    #- Constructor -#
+    def __init__(self, width, height, active=False):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = pygame.Surface([width, height])
+        # Fetch a rectangle to store the dimensions
+        self.rect = self.image.get_rect()
+
+
 class Menu(pygame.sprite.Sprite):
     """
     Basic Menu Class
@@ -52,7 +67,7 @@ class Menu(pygame.sprite.Sprite):
             self.options[i][1].y = self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)
 
             #- Something Wrong HERE V -#
-            # self.image.blit(self.options[i][0], (self.rect.centerx - (self.options[i][1].width / 2), self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)))
+            self.image.blit(self.options[i][0], (self.rect.centerx - (self.options[i][1].width / 2), self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)))
 
 
             #- For whatever reason, THIS works -#
