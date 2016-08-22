@@ -8,10 +8,37 @@ Essence.py
 
 from pygame.locals import *
 import pygame
-import views
-screen = views.Screen(1024, 720)
-pygame.font.init()
-main_menu = views.Menu(180, screen.rect, ["Start", "Quit"])
-menu_group = pygame.sprite.Group(main_menu)
-menu_group.draw(screen.surface)
-pygame.display.flip()
+from views import Screen, Window, Menu
+from controllers import KeyboardController
+import eventhandler
+
+class Essence:
+    def __init__(self):
+        pygame.init()
+        self.RUN = True
+        self.EventKey = "System"
+        self.screen = Screen(1024, 720)
+        pygame.font.init()
+        self.main_menu = Menu(180, self.screen.rect, ["Start", "Quit"])
+        self.menu_group = pygame.sprite.Group(self.main_menu)
+        self.menu_group.draw(self.screen.surface)
+        pygame.display.flip()
+        self.messenger = eventhandler.EventManager()
+        self.keyboard = KeyboardController("keyboard", self.messenger)
+        self.messenger.add(self)
+        self.clock = pygame.time.Clock()
+        self.Run()
+
+    def Run(self):
+        while self.RUN:
+            self.keyboard.Update()
+            self.clock.tick(60)
+
+        pygame.quit()
+
+    def Notify(self, event):
+        if event.name == "Game Exit Event":
+            self.RUN = False
+
+if __name__ == "__main__":
+    main = Essence()
