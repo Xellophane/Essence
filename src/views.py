@@ -1,17 +1,41 @@
-#! /usr/bin/env python
-
-"""
-Menu.py
-"""
-
 import pygame
+
+class Screen:
+    #0000#
+    """
+    Screen Object
+    - Container for all graphical objects in game
+    - Objects are stored in groups in a weakref dict list
+    - update() calls the draw() function of the groups in the list[].
+    - register() adds a group to the list[]
+    - remove() removes a group from the list[]
+    """
+
+    #- Contructor -#
+    def __init__(self, width, height):
+        from weakref import WeakKeyDictionary
+        self.surface = pygame.display.set_mode((width, height))
+        self.rect = self.surface.get_rect()
+        self.groups = WeakKeyDictionary()
+
+    def register(self, group):
+        self.groups[group] = 1
+
+    def remove(self, group):
+        del self.groups[group]
+
+    def update(self):
+        for group in self.groups.keys():
+            group.draw(self.surface)
+        pygame.display.flip()
+
 
 class Window(pygame.sprite.Sprite):
     """
     Basic Window Class
     Super class for every window here in
-    #0003#
     """
+    #0001#
     #- Constructor -#
     def __init__(self, width, height, active=False):
         pygame.sprite.Sprite.__init__(self)
@@ -24,8 +48,8 @@ class Window(pygame.sprite.Sprite):
 class Menu(pygame.sprite.Sprite):
     """
     Basic Menu Class
-    #0001#
     """
+    #0002#
     #- Basic Menu Object -#
     # Constructor #
     # Pass the width, height, a number of items,  and color of the object
@@ -72,23 +96,3 @@ class Menu(pygame.sprite.Sprite):
 
             #- For whatever reason, THIS works -#
             self.image.blit(self.options[i][0], (0, i * 60))
-
-
-
-
-
-class Screen():
-    """
-    Screen object
-    - Will store a pygame surface that represents the pygame window.
-    - Will store said surface's rect.
-    #0002#
-    """
-    #- Screen Object -#
-    # Constructor #
-    # Pass the width and the height of the screen #
-    def __init__(self, width, height):
-        self.surface = pygame.display.set_mode((width, height))
-        self.rect = self.surface.get_rect()
-
-

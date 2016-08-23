@@ -1,16 +1,37 @@
-Flesh out scenes list
-    - Main Model
-    - Sprites should NOT go here
-        - Should go with their view?
-        - Some sprites will end up with some controller combination
-    - Weak refs to allow easy adding and removal
-    - Scene parent
-        - Used as the basic scene
-Figure out controllers list
-    - Player input
-How will you process events?
-    - Events will be handeled in models.
+# Legend #
+! Top Priority
+~ Secondary/ May not be Nescesary
 
-Menu handling
-    - Art style?
+# Current Condition and Wants outside of roadmap #
+views.py
+ - Screen
+    - Should contain a weakref dictionary with all of the items that need drawing.
+        - Ex. Sprites, Menu's.
+    - Items will have to register themselves.
 
+Model
+ - essense.py is the current model. Would like this seperated out to allow more modularity and edibility. 
+
+Controller
+ - controllers.py currently houses the controllers. Would like this cleaned up a little bit.
+
+Communicator
+- eventhandler.py is the current communicator module. Fairly clean currently. Nothing currently desired here.
+
+
+# Roadmap #
+
+Cleanup
+    - clean up the codebase.
+        - essence.py
+        - views.py
+            - Especially messy, cleaning this will help with the cleanup of essence.py
+
+Player input/menu interation
+    - get menu interaction working
+        - get mouse interaction working.
+
+Seperate model out
+    ! get logic framerate and graphic framerate seperate
+    ~ Seperate the model from essence.py
+        - essence.py should just load modules and start game.

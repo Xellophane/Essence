@@ -19,7 +19,7 @@ class EventManager:
         """
         Post a new Event, will only be broadcast to those that are interested
         """
-        print("event %s posted.", event.name)
+        print("event '", event.name, "' posted")
         for listener in self.listeners.keys():
             if listener.EventKey == event.type:
                 listener.Notify(event)

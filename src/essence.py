@@ -10,22 +10,20 @@ from pygame.locals import *
 import pygame
 from views import Screen, Window, Menu
 from controllers import KeyboardController
-import eventhandler
+from game import Game
 
 class Essence:
     def __init__(self):
         pygame.init()
-        self.RUN = True
-        self.EventKey = "System"
-        self.screen = Screen(1024, 720)
-        pygame.font.init()
-        self.main_menu = Menu(180, self.screen.rect, ["Start", "Quit"])
-        self.menu_group = pygame.sprite.Group(self.main_menu)
-        self.menu_group.draw(self.screen.surface)
-        pygame.display.flip()
-        self.messenger = eventhandler.EventManager()
-        self.keyboard = KeyboardController("keyboard", self.messenger)
-        self.messenger.add(self)
+        self.ESSENCE = Game()
+        screen = Screen(1024, 720)
+        self.ESSENCE.register(screen)
+        main_menu = Menu(180, self.screen.rect, ["Start", "Quit"])
+        menu_group = pygame.sprite.Group(self.main_menu)
+        screen.register(menu_group)
+        messenger = eventhandler.EventManager()
+        keyboard = KeyboardController("keyboard", messenger)
+        messenger.add(self.ESSENCE)
         self.clock = pygame.time.Clock()
         self.Run()
 
