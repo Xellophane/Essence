@@ -16,18 +16,18 @@ class Screen:
         from weakref import WeakKeyDictionary
         self.surface = pygame.display.set_mode((width, height))
         self.rect = self.surface.get_rect()
-        self.groups = WeakKeyDictionary()
+        self.groups = WeakKeyDictionary() #different than pygame groups
 
     def register(self, group):
-        self.groups[group] = 1
+        self.groups[group] = 1 # different than pygame groups
 
     def remove(self, group):
         del self.groups[group]
 
     def update(self):
         for group in self.groups.keys():
-            group.draw(self.surface)
-        pygame.display.flip()
+            group.draw(self.surface) # this DOES refer to pygame groups
+        pygame.display.flip() # "Flip" to show what was drawn
 
 
 class Window(pygame.sprite.Sprite):
