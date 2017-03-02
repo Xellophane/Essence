@@ -9,7 +9,7 @@ Essence.py
 from pygame.locals import *
 import pygame
 from views import Screen, Window, Menu
-import controllers
+from controllers import KeyboardController
 from game import Game
 
 class Essence:

@@ -1,9 +1,6 @@
 # Legend #
 ! Top Priority
 ~ Secondary/ May not be Nescesary
-- Undone items
-| Partially Done item/Started items
-+ done item
 
 # Current Condition and Wants outside of roadmap #
 views.py
@@ -13,7 +10,7 @@ views.py
     - Items will have to register themselves.
 
 Model
- - essense.py is the current model. Would like this seperated out to allow more modularity and edibility.
+ - essense.py is the current model. Would like this seperated out to allow more modularity and edibility. 
 
 Controller
  - controllers.py currently houses the controllers. Would like this cleaned up a little bit.
@@ -30,11 +27,11 @@ Cleanup
         - views.py
             - Especially messy, cleaning this will help with the cleanup of essence.py
 
-Player input/menu interaction
+Player input/menu interation
     - get menu interaction working
         - get mouse interaction working.
 
-Separate model out
-    ! get logic framerate and graphic framerate separate
-    ! game.py should handle story and database stuff
-      _ Should be able to drop in a new game.py and have an entirely different story
+Seperate model out
+    ! get logic framerate and graphic framerate seperate
+    ~ Seperate the model from essence.py
+        - essence.py should just load modules and start game.
