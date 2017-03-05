@@ -6,28 +6,30 @@ Essence.py
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-from pygame.locals import *
+import controllers
 import pygame
+import eventhandler
+from pygame.locals import *
 from views import Screen, Window, Menu
-from controllers import KeyboardController
 from game import Game
 
 class Essence:
     def __init__(self):
         pygame.init()
         self.ESSENCE = Game()
-        screen = Screen(1024, 720)
-        self.ESSENCE.register(screen)
-        main_menu = Menu(180, self.screen.rect, ["Start", "Quit"])
-        menu_group = pygame.sprite.Group(self.main_menu)
-        screen.register(menu_group)
-        messenger = eventhandler.EventManager()
-        keyboard = KeyboardController("keyboard", messenger)
-        messenger.add(self.ESSENCE)
+        self.screen = Screen(1024, 720)
+        self.ESSENCE.register(self.screen)
+        self.main_menu = Menu(self.screen.surface, 512, 360, 80, ["Start", "Quit"])
+        self.menu_group = pygame.sprite.Group(self.main_menu)
+        self.screen.register(self.menu_group)
+        self.messenger = eventhandler.EventManager()
+        self.keyboard = controllers.KeyboardController("keyboard", self.messenger)
+        self.messenger.add(self.ESSENCE)
         self.clock = pygame.time.Clock()
         self.Run()
 
     def Run(self):
+        self.RUN = True
         while self.RUN:
             self.keyboard.Update()
             self.clock.tick(60)
