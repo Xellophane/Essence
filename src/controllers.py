@@ -24,7 +24,7 @@ class ControlerPrototype:
 
 class KeyboardController(ControlerPrototype):
     def __init__(self, Keytype, Manager):
-        super().__init__()
+        super().__init__(Keytype, Manager)
 
     """
     The controller for the keyboard

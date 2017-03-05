@@ -37,62 +37,47 @@ class Window(pygame.sprite.Sprite):
     """
     #0001#
     #- Constructor -#
-    def __init__(self, width, height, active=False):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(self, parent, x, y, width, height, active=False):
+        super().__init__()
 
-        self.image = pygame.Surface([width, height])
-        # Fetch a rectangle to store the dimensions
+        self.image = parent.subsurface(x, y, width, height)
+        # get rect to store x, y
         self.rect = self.image.get_rect()
 
 
-class Menu(pygame.sprite.Sprite):
+class Menu(Window):
     """
     Basic Menu Class
+    Todo:
+    - Write update logic.
     """
     #0002#
     #- Basic Menu Object -#
     # Constructor #
-    # Pass the width, height, a number of items,  and color of the object
-    def __init__(self, width, screen_rect, items, active=False):
-        # Call the Parent Class(Sprite) Constructor
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(self, parent, x, y, width, items, active = False):
+        # Call Super
+        super().__init__(parent, x, y, width, len(items) * 80, active)
 
         # Assign local variables
-        self.items = items
-        self.options = []
-        self.font = pygame.font.Font(None, 60)
+        self.items = items # class scope to hold passed items
+        self.options = [] # list to hold the rendered font items
+        self.font = pygame.font.Font(None, 60) # initializing a font object
 
-        # Create an image object for the menu (This could also be an image)
-        self.image = pygame.Surface([width, len(items) * 80])
-
-        # Fetch a rectangle object that has the dimensions of the image
-        # Update the position of the sprite by setting the rect values
-        self.rect = self.image.get_rect()
-        self.rect.centerx = screen_rect.centerx
-        self.rect.centery = screen_rect.centery
-
-        # Put the font objects into a list and add the rects afterwards
-
-        for i in range(len(items)) :
-            self.options.append([])
-            self.options[i].append(self.font.render(items[i], True, pygame.Color("white")))
-            self.options[i].append(self.options[i][0].get_rect())
+        for i in range(len(self.items)) : # looping through the items list and assign the resulting surface object to options[]
+            self.options.append(self.font.render(items[i], True, pygame.Color("white")))
 
         self.draw()
 
     def draw(self):
         """
-        -populate the two arrays
+        -
         -blit to the image surface
         """
 
-        for i in range(len(self.items)):
-            self.options[i][1].x = self.rect.centerx - (self.options[i][1].width / 2)
-            self.options[i][1].y = self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)
-
-            #- Something Wrong HERE V -#
-            self.image.blit(self.options[i][0], (self.rect.centerx - (self.options[i][1].width / 2), self.rect.centery - self.options[i][1].height + (self.options[i][1].height * i)))
-
-
-            #- For whatever reason, THIS works -#
-            self.image.blit(self.options[i][0], (0, i * 60))
+        for i in range(len(self.options)):
+            rect = self.options[i].get_rect() # grabbing rect from the surface object
+            # setting up x and y co-ordinates
+            rect.x = self.rect.centerx - rect.centerx
+            rect.y = i * rect.height
+            # blitting the image.
+            self.image.blit(self.options[i], self.options[i].get_rect())
