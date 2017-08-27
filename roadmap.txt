@@ -1,7 +1,7 @@
 # Legend #
 ! Top Priority
 ~ Secondary/ May not be Nescesary
-- Undone items
+- planned items
 | Partially Done item/Started items
 + done item
 
@@ -13,7 +13,8 @@ views.py
     - Items will have to register themselves.
 
 Model
- - essense.py is the current model. Would like this seperated out to allow more modularity and edibility.
+ - essence.py is the current model. Would like this seperated out to allow more modularity and edibility.
+  - game.py should end up being the model. with essence.py being the engine container.
 
 Controller
  - controllers.py currently houses the controllers. Would like this cleaned up a little bit.
@@ -37,4 +38,4 @@ Player input/menu interaction
 Separate model out
     ! get logic framerate and graphic framerate separate
     ! game.py should handle story and database stuff
-      _ Should be able to drop in a new game.py and have an entirely different story
+      - Should be able to drop in a new game.py and have an entirely different story

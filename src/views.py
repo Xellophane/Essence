@@ -12,19 +12,35 @@ class Screen:
     """
 
     #- Contructor -#
-    def __init__(self, width, height):
+    def __init__(self, width, height, manager):
+        # setting up a weak key dictionary.
         from weakref import WeakKeyDictionary
+        # adding self to EventHandler
+        manager.add(self)
+        # Setting EventKey for EventHandler filtering
+        self.EVENTKEY = "View"
+        # Initialize the display.
         self.surface = pygame.display.set_mode((width, height))
+        # getting a rect from the surface.
         self.rect = self.surface.get_rect()
+        # sets up a groups.
         self.groups = WeakKeyDictionary() #different than pygame groups
 
+    # add a subsurface to the WeakKeyDictionary.
     def register(self, group):
         self.groups[group] = 1 # different than pygame groups
 
+    # remove a subsurface from the WeakKeyDictionary
     def remove(self, group):
         del self.groups[group]
 
+    def Notify(self, event):
+        if event.ID == 3001:
+            self.update()
+
     def update(self):
+        # loop over the pygame groups in groups.keys and blit them to
+        # self.surface. Then flip the display
         for group in self.groups.keys():
             group.draw(self.surface) # this DOES refer to pygame groups
         pygame.display.flip() # "Flip" to show what was drawn
@@ -37,10 +53,11 @@ class Window(pygame.sprite.Sprite):
     """
     #0001#
     #- Constructor -#
-    def __init__(self, parent, x, y, width, height, active=False):
+    def __init__(self, parent, x, y, width, height):
         super().__init__()
 
-        self.image = parent.subsurface(x, y, width, height)
+        self.surface = parent.subsurface(x, y, width, height)
+        self.image = self.surface.copy()
         # get rect to store x, y
         self.rect = self.image.get_rect()
 
@@ -56,7 +73,7 @@ class Menu(Window):
     # Constructor #
     def __init__(self, parent, x, y, width, items, active = False):
         # Call Super
-        super().__init__(parent, x, y, width, len(items) * 80, active)
+        super().__init__(parent, x, y, width, len(items) * 80)
 
         # Assign local variables
         self.items = items # class scope to hold passed items

@@ -17,20 +17,26 @@ Current:
 """
 class ControlerPrototype:
     def __init__(self, Keytype, Manager):
-        self.EventKey = Keytype
+        self.EVENTKEY = Keytype
         self.Manager = Manager
-        self.Manager.add(self)
+        self.Manager.add(self) # registers self to manager
 
 
 class KeyboardController(ControlerPrototype):
+    # very basic controller for the keyboard.
     def __init__(self, Keytype, Manager):
         super().__init__(Keytype, Manager)
 
     """
     The controller for the keyboard
     """
+    def Notify(self, event):
+        # ID to sort by, allowing only the event it's interested in to be grabbed.
+        if event.ID == 2001:
+            self.Update()
 
     def Update(self):
+        # construct a collection to exit game with esc key.
         for event in pygame.event.get(KEYDOWN):
             if event.key == K_ESCAPE:
                 ev = events.QuitEvent()

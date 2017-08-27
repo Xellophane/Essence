@@ -27,7 +27,7 @@ class EventManager:
         Go through all the listeners and for those interested via EventKey,
         notify them of the event
         """
-        print("event '", event.name, "' posted")
+        print("event '", event.Name, "' posted")
         for listener in self.listeners.keys():
-            if listener.EventKey == event.Key:
+            if listener.EVENTKEY == event.Key:
                 listener.Notify(event)
