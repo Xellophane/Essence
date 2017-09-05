@@ -26,6 +26,17 @@ class Screen:
         # sets up a groups.
         self.groups = WeakKeyDictionary() #different than pygame groups
 
+    def make_child(self, rect):
+        s = self.surface
+        r = pygame.Rect(rect)
+        return s.subsurface(r)
+
+    def get_surface(self):
+        return self.surface
+
+    def get_rect(self):
+        return self.rect
+
     # add a subsurface to the WeakKeyDictionary.
     def register(self, group):
         self.groups[group] = 1 # different than pygame groups
@@ -53,13 +64,33 @@ class Window(pygame.sprite.Sprite):
     """
     #0001#
     #- Constructor -#
-    def __init__(self, parent, x, y, width, height):
+    def __init__(self, parent, rect):
         super().__init__()
-
-        self.surface = parent.subsurface(x, y, width, height)
+        self.surface = parent.make_child(rect)
+        print(self.surface.get_offset())
         self.image = self.surface.copy()
         # get rect to store x, y
         self.rect = self.image.get_rect()
+        self.rect.x = rect[0]
+        self.rect.y = rect[1]
+
+        print(self.get_rect())
+
+    def get_surface(self):
+        return self.surface
+
+    def get_rect(self):
+        return self.rect
+
+    def get_offset_x(self):
+        offset = self.surface.get_offset()
+        x = offset[0]
+        return x
+
+    def get_offset_y(self):
+        offset = self.surface.get_offset()
+        y = offset[1]
+        return y
 
 
 class Menu(Window):
@@ -73,7 +104,10 @@ class Menu(Window):
     # Constructor #
     def __init__(self, parent, x, y, width, items, active = False):
         # Call Super
-        super().__init__(parent, x, y, width, len(items) * 80)
+        # specifically, set the x unit half of its width away from the center.
+        # and the same from the y unit.
+        # This centers the rect where it's made? May not be the best option :(
+        super().__init__(parent, (x - (width / 2), y - ((len(items) * 80) / 2), width, len(items) * 80))
 
         # Assign local variables
         self.items = items # class scope to hold passed items
@@ -94,7 +128,6 @@ class Menu(Window):
         for i in range(len(self.options)):
             rect = self.options[i].get_rect() # grabbing rect from the surface object
             # setting up x and y co-ordinates
-            rect.x = self.rect.centerx - rect.centerx
             rect.y = i * rect.height
             # blitting the image.
-            self.image.blit(self.options[i], self.options[i].get_rect())
+            self.image.blit(self.options[i], rect)

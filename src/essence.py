@@ -34,7 +34,7 @@ class Essence:
         # Initialize the view window(sceen), register it to EventHandler
         self.screen = views.Screen(1024, 720, self.messenger)
         # Initialize the menu sprite and menu group. (TEMP)
-        self.main_menu = views.Menu(self.screen.surface, 512, 360, 80, ["Start", "Quit"])
+        self.main_menu = views.Menu(self.screen, 512, 360, 100, ["Start", "Quit"])
         self.menu_group = pygame.sprite.Group(self.main_menu)
         self.screen.register(self.menu_group)
         # Initialize the keyboard
