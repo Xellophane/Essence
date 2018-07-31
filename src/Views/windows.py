@@ -81,8 +81,6 @@ class Window(pygame.sprite.Sprite):
         # Fill background with primary
         # self.image.fill(pygame.Color("Blue"), self.outlinerect)
 
-
-
     def get_surface(self):
         return self.surface
 
@@ -130,7 +128,6 @@ class Menu(Window):
 
     def update(self):
         pass
-
 
     def draw(self):
         """

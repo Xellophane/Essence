@@ -15,7 +15,7 @@ import controllers
 import pygame
 import eventhandler
 from pygame.locals import *
-import views
+import Views.Windows
 import events
 from game import Game
 
