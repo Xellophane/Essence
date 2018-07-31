@@ -71,10 +71,17 @@ class Window(pygame.sprite.Sprite):
         self.image = self.surface.copy()
         # get rect to store x, y
         self.rect = self.image.get_rect()
+        # set rect.x to the argument rect's first item
         self.rect.x = rect[0]
+        # set rect.x to the argument rect's second item
         self.rect.y = rect[1]
+        self.outlinerect = pygame.Rect((self.rect.x - 5, self.rect.y - 5), (self.rect.height - 5, self.rect.width - 5))
+        # fill Background with outline
+        self.image.fill(pygame.Color("Blue"))
+        # Fill background with primary
+        # self.image.fill(pygame.Color("Blue"), self.outlinerect)
 
-        print(self.get_rect())
+
 
     def get_surface(self):
         return self.surface
@@ -108,6 +115,7 @@ class Menu(Window):
         # and the same from the y unit.
         # This centers the rect where it's made? May not be the best option :(
         super().__init__(parent, (x - (width / 2), y - ((len(items) * 80) / 2), width, len(items) * 80))
+        print(len(items))
 
         # Assign local variables
         self.items = items # class scope to hold passed items
@@ -118,6 +126,11 @@ class Menu(Window):
             self.options.append(self.font.render(items[i], True, pygame.Color("white")))
 
         self.draw()
+        self.active = active
+
+    def update(self):
+        pass
+
 
     def draw(self):
         """
@@ -131,3 +144,6 @@ class Menu(Window):
             rect.y = i * rect.height
             # blitting the image.
             self.image.blit(self.options[i], rect)
+
+        # if self.active == True:
+            # pass
