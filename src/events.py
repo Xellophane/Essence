@@ -32,3 +32,16 @@ class GraphicsUpdateEvent(Event):
         self.Name = "Graphics Update Event"
         self.Key = "View"
         self.ID = 3001
+
+class MouseMotion():
+    def __init__(self):
+        self.Name = "Mouse Motion Event"
+        self.Key = "Mouse"
+        self.ID = 2011
+
+class MouseButtonDown():
+    def __init__(self, event):
+        self.Name = "Mouse Button Event"
+        self.Key = "Mouse"
+        self.ID = 2011
+        self.event = event

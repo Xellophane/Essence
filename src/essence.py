@@ -7,15 +7,15 @@ No idea what will be done for story, but just building the engine right now.
 """
 
 __version__ = '0.01'
-__author__ = "Scholar Xellophane"
+__author__ = "Crystal Division Xellophane"
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
-
+import sys
 import controllers
 import pygame
 import eventhandler
 from pygame.locals import *
-import Views.Windows
+import Views.windows
 import events
 from game import Game
 
@@ -32,9 +32,9 @@ class Essence:
         # Initialize Database, Story, ect. and register it to EventHandler
         self.ESSENCE = Game(self.messenger)
         # Initialize the view window(sceen), register it to EventHandler
-        self.screen = views.Screen(1024, 720, self.messenger)
+        self.screen = Views.windows.Screen(1024, 720, self.messenger)
         # Initialize the menu sprite and menu group. (TEMP)
-        self.main_menu = views.Menu(self.screen, 512, 360, 100, ["Start", "Quit"])
+        self.main_menu = Views.windows.Menu(self.screen, 512, 360, 100, ["Start", "Quit"])
         self.menu_group = pygame.sprite.Group(self.main_menu)
         self.screen.register(self.menu_group)
         # Initialize the keyboard
@@ -57,6 +57,7 @@ class Essence:
             self.clock.tick(60)
         # When loop is exited, quit/exit gracefully if possible.
         pygame.quit()
+        sys.exit()
 
     def Notify(self, event):
         # Notify method for self: When it recieves the event 1001, set the boolean
@@ -64,6 +65,7 @@ class Essence:
         # gracefully.
         if event.ID == int(1001):
             self.running = False
+            print("1001")
 
 # Allow the file to be run as a "script".
 if __name__ == "__main__":

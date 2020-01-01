@@ -15,14 +15,32 @@ Current:
 - Update() will pull from the pygame event loop and notify the EventManager
   based on what happens on the loop.
 """
-class ControlerPrototype:
+class ControllerPrototype:
     def __init__(self, Keytype, Manager):
         self.EVENTKEY = Keytype
         self.Manager = Manager
         self.Manager.add(self) # registers self to manager
 
+class MouseController(ControllerPrototype):
+    def __init__(self, Keytype, Manager):
+        super().__init__(Keytype, Manager)
 
-class KeyboardController(ControlerPrototype):
+    def Notify(self, event):
+        # ID to sort by, grabbing only the event that matches the ID
+        if event.ID == 2001:
+            self.Update()
+
+    def Update(self):
+        for event in pygame.event.get():
+            if event == MOUSEMOTION:
+                ev = events.MouseMotion()
+            if event == MOUSEBUTTONDOWN:
+                ev = events.MouseButtonDown(MOUSEBUTTONDOWN)
+            print(ev)
+            self.Manager.post(ev)
+
+
+class KeyboardController(ControllerPrototype):
     # very basic controller for the keyboard.
     def __init__(self, Keytype, Manager):
         super().__init__(Keytype, Manager)
